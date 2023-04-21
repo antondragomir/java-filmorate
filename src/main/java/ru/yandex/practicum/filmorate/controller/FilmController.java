@@ -1,8 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
-import jakarta.validation.constraints.Min;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,6 +12,8 @@ import ru.yandex.practicum.filmorate.model.ErrorMessage;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.Collection;
 
 @Validated
