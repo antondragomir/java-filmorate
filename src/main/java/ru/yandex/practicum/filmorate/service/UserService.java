@@ -16,7 +16,6 @@ public class UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
-
     public Optional<User> getById(@NonNull Integer id) {
         return Optional.ofNullable(users.get(id));
     }

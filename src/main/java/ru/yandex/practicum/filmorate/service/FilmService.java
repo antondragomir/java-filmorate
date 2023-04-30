@@ -14,14 +14,17 @@ public class FilmService {
     private final Map<Integer, Film> films = new HashMap<>();
     private Integer id = 0;
     private static final Logger log = LoggerFactory.getLogger(FilmService.class);
+
     public Optional<Film> getById(@NonNull Integer id) {
         return Optional.ofNullable(films.get(id));
     }
+
     public Optional<Film> createNewFilm(@NonNull Film film) {
         film.setId(getNewId());
         films.put(film.getId(), film);
         return Optional.of(film);
     }
+
     public Optional<Film> updateFilm(Film film) {
         Optional<Film> optFilm = getById(film.getId());
         if (optFilm.isEmpty()) {
@@ -37,11 +40,12 @@ public class FilmService {
         log.info("Изменение фильма. id = {}", existFilm.getId());
         return Optional.of(existFilm);
     }
+
     private Integer getNewId() {
         return ++id;
     }
+
     public Collection<Film> getFilms() {
         return films.values();
     }
-
 }
