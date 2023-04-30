@@ -5,10 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -24,8 +22,9 @@ public class UserService {
     }
 
     public Optional<User> createNewUser(@NonNull User user) {
-        if (userValidator(user)) {
-            user.setId(getNewId());
+        user.setId(getNewId());
+        if (user.getName() == null || user.getName().isEmpty()) {
+            user.setName(user.getLogin());
         }
         users.put(user.getId(), user);
         return Optional.of(user);
@@ -37,7 +36,6 @@ public class UserService {
             log.error("Пользователь не найден");
             throw new NotFoundException("Пользователь не найден");
         }
-        userValidator(user);
         User existUser = users.get(optUser.get().getId());
         existUser.setBirthday(user.getBirthday());
         existUser.setName(user.getName());
@@ -56,20 +54,4 @@ public class UserService {
         return users.values();
     }
 
-    private boolean userValidator(User user) {
-        if (user.getLogin().contains(" ") || user.getLogin().isEmpty()) {
-            throw new ValidationException("Ошибка валидации");
-        }
-        if (!user.getEmail().contains("@") || user.getEmail().isEmpty()) {
-            throw new ValidationException("Ошибка валидации");
-        }
-        if (user.getBirthday().isAfter(LocalDate.now())) {
-            throw new ValidationException("Ошибка валидации");
-        }
-        if (user.getName() == null) {
-            user.setName(user.getLogin());
-        }
-
-        return true;
-    }
 }

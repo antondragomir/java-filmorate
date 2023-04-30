@@ -1,11 +1,11 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
+import ru.yandex.practicum.filmorate.annotations.BirthdayValidation;
+import ru.yandex.practicum.filmorate.annotations.EmailValidation;
+import ru.yandex.practicum.filmorate.annotations.LoginValidation;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -14,15 +14,12 @@ public class User {
     Integer id;
 
     String name;
-
-    @NotBlank
-    @NotNull
+    @LoginValidation()
     String login;
 
-    @NotNull
-    @Email
+    @EmailValidation()
     String email;
 
-    @NotNull
+    @BirthdayValidation()
     LocalDate birthday;
 }
