@@ -1,8 +1,6 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
-import ru.yandex.practicum.filmorate.annotations.DescriptionValidation;
-import ru.yandex.practicum.filmorate.annotations.NameValidation;
 import ru.yandex.practicum.filmorate.annotations.ReleaseDateValidation;
 
 import javax.validation.constraints.Min;
