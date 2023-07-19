@@ -23,6 +23,7 @@ public class FilmController {
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
+
     @GetMapping("/film/{id:\\d+}")
     public ResponseEntity<Film> get(@PathVariable("id") @Min(0) Integer id) {
         return ResponseEntity.ok(filmService.getById(id).orElseThrow());

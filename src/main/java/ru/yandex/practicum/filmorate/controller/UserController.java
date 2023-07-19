@@ -22,6 +22,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping("/user/{id:\\d+}")
     public ResponseEntity<User> getUser(@PathVariable("id") @Min(0) Integer id) {
         return ResponseEntity.ok(userService.getById(id).orElseThrow());
