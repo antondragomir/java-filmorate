@@ -5,21 +5,23 @@ import ru.yandex.practicum.filmorate.annotations.BirthdayValidation;
 import ru.yandex.practicum.filmorate.annotations.EmailValidation;
 import ru.yandex.practicum.filmorate.annotations.LoginValidation;
 
-import javax.validation.constraints.Min;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
 public class User {
     @Min(1)
-    Integer id;
+    private Integer id;
 
-    String name;
+    private String name;
     @LoginValidation()
-    String login;
+    private String login;
 
-    @EmailValidation()
-    String email;
+    @Email
+    @NotEmpty
+    private String email;
 
-    @BirthdayValidation()
-    LocalDate birthday;
+    @NotNull
+    @PastOrPresent
+    private LocalDate birthday;
 }

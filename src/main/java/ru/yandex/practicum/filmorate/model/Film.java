@@ -6,21 +6,27 @@ import ru.yandex.practicum.filmorate.annotations.NameValidation;
 import ru.yandex.practicum.filmorate.annotations.ReleaseDateValidation;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
 public class Film {
     @Min(1)
-    Integer id;
+    private Integer id;
 
-    @NameValidation()
-    String name;
+    @NotBlank
+    private String name;
 
-    @DescriptionValidation()
-    String description;
+    @Size(max = 200)
+    private String description;
+
+    @NotNull
     @ReleaseDateValidation()
-    LocalDate releaseDate;
+    private LocalDate releaseDate;
 
-    @Min(0)
-    Integer duration;
+    @NotNull
+    @Min(1)
+    private Integer duration;
 }

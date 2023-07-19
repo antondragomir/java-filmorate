@@ -26,12 +26,9 @@ public class FilmService {
     }
 
     public Optional<Film> updateFilm(Film film) {
-        Optional<Film> optFilm = getById(film.getId());
-        if (optFilm.isEmpty()) {
-            log.error("Фильм не найден");
+        Film existFilm = getById(film.getId()).orElseThrow(() -> {
             throw new NotFoundException("Фильм не найден");
-        }
-        Film existFilm = films.get(optFilm.get().getId());
+        });
         existFilm.setName(film.getName());
         existFilm.setDescription(film.getDescription());
         existFilm.setDuration(film.getDuration());
@@ -45,7 +42,7 @@ public class FilmService {
         return ++id;
     }
 
-    public Collection<Film> getFilms() {
-        return films.values();
+    public List<Film> getFilms() {
+        return new ArrayList<>(films.values());
     }
 }

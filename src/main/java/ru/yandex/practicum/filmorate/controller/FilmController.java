@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.controller;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -12,14 +13,18 @@ import javax.validation.constraints.Min;
 import java.util.Collection;
 
 @Validated
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/films")
 public class FilmController {
 
-    private final FilmService filmService = new FilmService();
+    private final FilmService filmService;
 
+    public FilmController(FilmService filmService) {
+        this.filmService = filmService;
+    }
     @GetMapping("/film/{id:\\d+}")
-    public ResponseEntity<Film> get(@Valid @PathVariable("id") @Min(0) Integer id) {
+    public ResponseEntity<Film> get(@PathVariable("id") @Min(0) Integer id) {
         return ResponseEntity.ok(filmService.getById(id).orElseThrow());
     }
 

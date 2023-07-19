@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
+import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.*;
@@ -22,20 +23,16 @@ public class UserService {
 
     public Optional<User> createNewUser(@NonNull User user) {
         user.setId(getNewId());
-        if (user.getName() == null || user.getName().isEmpty()) {
-            user.setName(user.getLogin());
-        }
+        checkName(user);
         users.put(user.getId(), user);
         return Optional.of(user);
     }
 
     public Optional<User> updateUser(User user) {
-        Optional<User> optUser = getById(user.getId());
-        if (optUser.isEmpty()) {
-            log.error("Пользователь не найден");
+        User existUser = getById(user.getId()).orElseThrow(() -> {
             throw new NotFoundException("Пользователь не найден");
-        }
-        User existUser = users.get(optUser.get().getId());
+        });
+        checkName(user);
         existUser.setBirthday(user.getBirthday());
         existUser.setName(user.getName());
         existUser.setEmail(user.getEmail());
@@ -49,8 +46,15 @@ public class UserService {
         return ++id;
     }
 
-    public Collection<User> getUsers() {
-        return users.values();
+    private void checkName(User user) {
+        if (user.getName() == null || user.getName().isBlank()) {
+            user.setName(user.getLogin());
+            log.info("Изменение имени пользователя. login = {}", user.getLogin());
+        }
+    }
+
+    public List<User> getUsers() {
+        return new ArrayList<>(users.values());
     }
 
 }
