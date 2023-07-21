@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping
-    public Collection<User> getAllUsers() {
-        return userService.getUsers();
+    public ResponseEntity<Collection<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getUsers());
     }
 
     @PostMapping

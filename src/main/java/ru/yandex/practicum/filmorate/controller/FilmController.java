@@ -30,8 +30,8 @@ public class FilmController {
     }
 
     @GetMapping
-    public Collection<Film> getAll() {
-        return filmService.getFilms();
+    public ResponseEntity<Collection<Film>> getAll() {
+        return ResponseEntity.ok(filmService.getFilms());
     }
 
     @PostMapping
