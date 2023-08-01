@@ -12,7 +12,6 @@ import javax.validation.constraints.Min;
 import java.util.Collection;
 
 @Validated
-//@RestController
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -25,7 +24,7 @@ public class UserController {
 
     @GetMapping("/user/{id:\\d+}")
     public ResponseEntity<User> getUser(@PathVariable("id") @Min(0) Integer id) {
-        return ResponseEntity.ok(userService.getById(id).orElseThrow());
+        return ResponseEntity.ok(userService.getById(id));
     }
 
     @GetMapping
@@ -40,9 +39,9 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<User> updateUser(
-            @RequestBody User user
+            @RequestBody @Valid User user
     ) {
-        return ResponseEntity.ok(userService.updateUser(user).orElseThrow());
+        return ResponseEntity.ok(userService.updateUser(user));
     }
 
 }

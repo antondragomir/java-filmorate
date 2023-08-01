@@ -13,7 +13,6 @@ import javax.validation.constraints.Min;
 import java.util.Collection;
 
 @Validated
-//@RestController
 @Controller
 @RequestMapping("/films")
 public class FilmController {
@@ -26,7 +25,7 @@ public class FilmController {
 
     @GetMapping("/film/{id:\\d+}")
     public ResponseEntity<Film> get(@PathVariable("id") @Min(0) Integer id) {
-        return ResponseEntity.ok(filmService.getById(id).orElseThrow());
+        return ResponseEntity.ok(filmService.getById(id));
     }
 
     @GetMapping
@@ -36,14 +35,14 @@ public class FilmController {
 
     @PostMapping
     public ResponseEntity<Film> create(@Valid @RequestBody Film film) {
-        return ResponseEntity.ok(filmService.createNewFilm(film).orElseThrow());
+        return ResponseEntity.ok(filmService.createNewFilm(film));
     }
 
     @PutMapping
     public ResponseEntity<Film> update(
-            @RequestBody Film film
+            @RequestBody @Valid Film film
     ) {
-        return ResponseEntity.ok(filmService.updateFilm(film).orElseThrow());
+        return ResponseEntity.ok(filmService.updateFilm(film));
     }
 
 
