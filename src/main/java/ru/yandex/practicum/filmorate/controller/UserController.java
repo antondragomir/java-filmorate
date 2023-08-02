@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("/user/{id:\\d+}")
     public ResponseEntity<User> getUser(@PathVariable("id") @Min(0) Integer id) {
-        return ResponseEntity.ok(userService.getById(id));
+        return ResponseEntity.ok(userService.getById(id).orElseThrow());
     }
 
     @GetMapping
@@ -34,7 +34,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        return ResponseEntity.ok(userService.createNewUser(user).orElseThrow());
+        return ResponseEntity.ok(userService.createNewUser(user));
     }
 
     @PutMapping

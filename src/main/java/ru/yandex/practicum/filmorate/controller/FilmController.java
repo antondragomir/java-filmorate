@@ -25,7 +25,7 @@ public class FilmController {
 
     @GetMapping("/film/{id:\\d+}")
     public ResponseEntity<Film> get(@PathVariable("id") @Min(0) Integer id) {
-        return ResponseEntity.ok(filmService.getById(id));
+        return ResponseEntity.ok(filmService.getById(id).orElseThrow());
     }
 
     @GetMapping
@@ -40,10 +40,9 @@ public class FilmController {
 
     @PutMapping
     public ResponseEntity<Film> update(
-            @RequestBody @Valid Film film
+            @Valid @RequestBody Film film
     ) {
         return ResponseEntity.ok(filmService.updateFilm(film));
     }
-
 
 }

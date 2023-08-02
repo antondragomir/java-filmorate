@@ -4,6 +4,7 @@ import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.*;
@@ -15,19 +16,21 @@ public class UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
-    public User getById(@NonNull Integer id) {
-        return users.get(id);
+    public Optional<User> getById(@NonNull Integer id) {
+        return Optional.ofNullable(users.get(id));
     }
 
-    public Optional<User> createNewUser(@NonNull User user) {
+    public User createNewUser(@NonNull User user) {
         user.setId(getNewId());
         checkName(user);
         users.put(user.getId(), user);
-        return Optional.of(user);
+        return user;
     }
 
     public User updateUser(User user) {
-        User existUser = getById(user.getId());
+        User existUser = getById(user.getId()).orElseThrow(() -> {
+            throw new NotFoundException("Пользователь не найден");
+        });
         checkName(user);
         existUser.setBirthday(user.getBirthday());
         existUser.setName(user.getName());
